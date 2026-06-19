@@ -49,12 +49,16 @@ export default function Header() {
             <div className={styles.navDropdown}>
               <Link href="/shop" className={styles.navLink}>Shop ▾</Link>
               <div className={styles.dropdown}>
-                {['Sarees', 'Chudithar', 'Nighties', "Women's Wear", "Men's Wear", 'Dhoti Collection', 'Kids Wear', 'Newborn Baby Dress'].map(c => (
+                {['Sarees', 'Chudithar', "Women's Nighties", "Women's Wear", "Men's Wear", 'Dhoti Collection', 'Kids Wear', 'Newborn Baby Dress'].map(c => (
                   <Link key={c} href={`/shop/${c.toLowerCase().replace(/['"\s]+/g, '-')}`} className={styles.dropdownItem}>{c}</Link>
                 ))}
               </div>
             </div>
-            <Link href="/about" className={styles.navLink}>About</Link>
+            <Link href="/shop?sort=newest" className={styles.navLink}>New Arrivals</Link>
+            <Link href="/shop/women-s-nighties" className={styles.navLink}>Nighties</Link>
+            <Link href="/shop/men-s-wear" className={styles.navLink}>Men</Link>
+            <Link href="/shop/women-s-wear" className={styles.navLink}>Women</Link>
+            <Link href="/shop/kids-wear" className={styles.navLink}>Kids</Link>
             <Link href="/wholesale" className={styles.navLink}>Wholesale</Link>
             <Link href="/contact" className={styles.navLink}>Contact</Link>
           </nav>
@@ -89,7 +93,7 @@ export default function Header() {
               {mobileShopOpen && (
                 <div className={styles.mobileSubMenu}>
                   <Link href="/shop" className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>All Products</Link>
-                  {['Sarees', 'Chudithar', 'Nighties', "Women's Wear", "Men's Wear", 'Dhoti Collection', 'Kids Wear', 'Newborn Baby Dress'].map(c => (
+                  {['Sarees', 'Chudithar', "Women's Nighties", "Women's Wear", "Men's Wear", 'Dhoti Collection', 'Kids Wear', 'Newborn Baby Dress'].map(c => (
                     <Link key={c} href={`/shop/${c.toLowerCase().replace(/['"\s]+/g, '-')}`} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
                       {c}
                     </Link>
@@ -98,6 +102,11 @@ export default function Header() {
               )}
             </div>
 
+            <Link href="/shop?sort=newest" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>New Arrivals</Link>
+            <Link href="/shop/women-s-nighties" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Nighties</Link>
+            <Link href="/shop/men-s-wear" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Men</Link>
+            <Link href="/shop/women-s-wear" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Women</Link>
+            <Link href="/shop/kids-wear" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Kids</Link>
             <Link href="/about" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>About</Link>
             <Link href="/wholesale" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Wholesale</Link>
             <Link href="/contact" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Contact</Link>

@@ -365,7 +365,7 @@
   color: #fff;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .nav { display: none; }
   .menuBtn { display: flex; }
 }
