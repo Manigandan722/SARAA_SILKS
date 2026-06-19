@@ -483,6 +483,7 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
   };
   attributes: {
     address: Schema.Attribute.Text & Schema.Attribute.Required;
+    awbCode: Schema.Attribute.String;
     city: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -497,6 +498,7 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     pincode: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     shiprocketOrderId: Schema.Attribute.String;
+    shiprocketShipmentId: Schema.Attribute.String;
     state: Schema.Attribute.String & Schema.Attribute.Required;
     status: Schema.Attribute.Enumeration<
       ['pending', 'processing', 'shipped', 'delivered', 'cancelled']

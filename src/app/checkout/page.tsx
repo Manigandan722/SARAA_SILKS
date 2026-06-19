@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
@@ -8,7 +9,8 @@ export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  
+  const [error, setError] = useState('');
+
   const [orderId, setOrderId] = useState('');
   const [shiprocketOrderId, setShiprocketOrderId] = useState('');
   const [awbCode, setAwbCode] = useState('');
@@ -23,15 +25,17 @@ export default function CheckoutPage() {
     city: '',
     state: '',
     pincode: '',
+    paymentMethod: 'COD',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     try {
       const res = await fetch('/api/checkout', {
@@ -41,25 +45,25 @@ export default function CheckoutPage() {
         },
         body: JSON.stringify({
           ...formData,
-          address: formData.address2 ? `${formData.address}, ${formData.address2}` : formData.address,
           items,
           total,
         }),
       });
 
       const data = await res.json();
-      if (data.success) {
+
+      if (res.ok && data.success) {
         setOrderId(data.orderId);
         setShiprocketOrderId(data.shiprocketOrderId);
         setAwbCode(data.awbCode);
         setSuccess(true);
         clearCart();
       } else {
-        alert('Checkout failed: ' + (data.error || 'Unknown error'));
+        setError(data.error || 'Checkout failed. Please try again.');
       }
     } catch (err) {
       console.error(err);
-      alert('Network error during checkout. Please try again.');
+      setError('Network error during checkout. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -68,18 +72,18 @@ export default function CheckoutPage() {
   if (success) {
     return (
       <div className={`container ${styles.successContainer}`}>
-        <div className={styles.successIcon}>✓</div>
+        <div className={styles.successIcon}>OK</div>
         <h1 className={styles.successTitle}>Order Confirmed!</h1>
         <p className={styles.successSub}>Thank you for shopping with Saraa Silks.</p>
-        
+
         <div className={styles.trackingCard}>
           <h4 className={styles.trackingTitle}>Order Tracking Details</h4>
-          
+
           <div className={styles.trackingDetail}>
             <span className={styles.trackingLabel}>Internal Order ID:</span><br />
             <strong className={styles.trackingVal}>{orderId}</strong>
           </div>
-          
+
           <div className={styles.trackingDetail}>
             <span className={styles.trackingLabel}>Shiprocket Order Reference:</span><br />
             <strong className={styles.trackingVal}>{shiprocketOrderId}</strong>
@@ -87,12 +91,14 @@ export default function CheckoutPage() {
 
           <div className={styles.trackingDetail}>
             <span className={styles.trackingLabel}>Shiprocket AWB Tracking Code:</span><br />
-            <span className={`${styles.trackingVal} ${styles.trackingValCode}`}>{awbCode}</span>
+            <span className={`${styles.trackingVal} ${styles.trackingValCode}`}>
+              {awbCode || 'Will be assigned after shipment processing'}
+            </span>
           </div>
         </div>
 
         <p className={styles.adminNote}>
-          To check this order, the administrator can log into the <strong>Strapi Admin Panel</strong> (`http://localhost:1337/admin`) under <strong>Content Manager &gt; Order</strong> where this order is logged.
+          To check this order, the administrator can log into the <strong>Strapi Admin Panel</strong> at <strong>http://localhost:1337/admin</strong> under <strong>Content Manager &gt; Order</strong>.
         </p>
         <Link href="/" className="btn btn-primary">Back to Home</Link>
       </div>
@@ -112,12 +118,12 @@ export default function CheckoutPage() {
   return (
     <div className={`container ${styles.checkoutContainer}`}>
       <h1 className={styles.title}>Secure Checkout</h1>
-      
+
       <div className={styles.layoutWrapper}>
         <div className={styles.formColumn}>
           <form onSubmit={handleCheckout} className={styles.checkoutForm}>
             <h3 className={styles.formSectionTitle}>Shipping Address</h3>
-            
+
             <div className={styles.formGridTwo}>
               <div>
                 <label className={styles.formGroupLabel}>First Name *</label>
@@ -160,8 +166,18 @@ export default function CheckoutPage() {
               </div>
             </div>
 
+            <div className={styles.formGroup}>
+              <label>Payment Method *</label>
+              <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange} required className={styles.inputField}>
+                <option value="COD">Cash on Delivery</option>
+                <option value="Prepaid">Prepaid</option>
+              </select>
+            </div>
+
+            {error && <p className={styles.errorText}>{error}</p>}
+
             <button type="submit" disabled={loading} className={`btn btn-primary ${styles.submitBtn}`} style={{ opacity: loading ? 0.7 : 1 }}>
-              {loading ? 'Processing...' : `Pay ₹${total}`}
+              {loading ? 'Processing...' : `Place order - Rs. ${total}`}
             </button>
             <p className={styles.termsText}>By placing your order, you agree to our Terms & Conditions.</p>
           </form>
@@ -171,17 +187,17 @@ export default function CheckoutPage() {
           <div className={styles.summaryCard}>
             <h3 className={styles.summaryTitle}>Order Summary</h3>
             <div className={styles.summaryItemsList}>
-              {items.map(item => (
+              {items.map((item) => (
                 <div key={item.id} className={styles.summaryItemRow}>
                   <span>{item.title} x {item.quantity}</span>
-                  <strong>₹{item.price * item.quantity}</strong>
+                  <strong>Rs. {item.price * item.quantity}</strong>
                 </div>
               ))}
             </div>
-            
+
             <div className={styles.summaryTotalRow}>
               <span>Total</span>
-              <span className={styles.totalPrice}>₹{total}</span>
+              <span className={styles.totalPrice}>Rs. {total}</span>
             </div>
           </div>
         </div>

@@ -60,6 +60,12 @@
     },
     "shiprocketOrderId": {
       "type": "string"
+    },
+    "shiprocketShipmentId": {
+      "type": "string"
+    },
+    "awbCode": {
+      "type": "string"
     }
   }
 }

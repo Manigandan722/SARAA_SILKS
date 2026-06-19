@@ -16,6 +16,19 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Shiprocket Checkout
+
+Add these values to `.env.local` before testing checkout:
+
+```bash
+NEXT_PUBLIC_STRAPI_URL=http://127.0.0.1:1337
+SHIPROCKET_EMAIL=your_api_user_email
+SHIPROCKET_PASSWORD=your_api_user_password
+SHIPROCKET_PICKUP_LOCATION=Coimbatore Warehouse
+```
+
+Create the API user from the Shiprocket dashboard under Settings > API > Add New API User. The pickup location must exactly match a pickup location configured in Shiprocket.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
