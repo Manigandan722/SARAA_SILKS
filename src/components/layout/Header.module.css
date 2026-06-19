@@ -1,0 +1,253 @@
+/* ─── Marquee ─────────────────────────────────────────── */
+.marqueeBar {
+  background: linear-gradient(90deg, var(--copper-dark), var(--copper), var(--copper-dark));
+  color: #fff;
+  font-size: 0.78rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  overflow: hidden;
+  height: 34px;
+  display: flex;
+  align-items: center;
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+
+.marqueeItem {
+  white-space: nowrap;
+  padding: 0 24px;
+}
+
+/* ─── Header Shell ────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: background var(--speed) ease, box-shadow var(--speed) ease, border-color var(--speed) ease;
+  border-bottom: 1px solid transparent;
+}
+
+.header.scrolled {
+  background: rgba(14, 12, 10, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom-color: var(--border);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.45);
+}
+
+/* ─── Inner Layout ────────────────────────────────────── */
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  gap: 24px;
+}
+
+/* ─── Logo ────────────────────────────────────────────── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logoMain {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: var(--copper-light);
+  letter-spacing: 0.12em;
+}
+
+.logoSub {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+/* ─── Nav ─────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navLink {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  transition: color var(--speed) ease, background var(--speed) ease;
+}
+
+.navLink:hover {
+  color: var(--copper-light);
+  background: rgba(200, 118, 58, 0.08);
+}
+
+/* Dropdown */
+.navDropdown {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  min-width: 220px;
+  box-shadow: var(--shadow-card);
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+}
+
+.navDropdown:hover .dropdown {
+  display: flex;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.dropdownItem {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  transition: all var(--speed) ease;
+}
+
+.dropdownItem:hover {
+  background: rgba(200, 118, 58, 0.12);
+  color: var(--copper-light);
+  padding-left: 20px;
+}
+
+/* ─── Actions ─────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all var(--speed) ease;
+}
+
+.iconBtn:hover {
+  background: var(--surface-2);
+  color: var(--copper-light);
+}
+
+.whatsapp:hover {
+  color: #25D366;
+}
+
+.cartBtn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  background: rgba(200, 118, 58, 0.12);
+  border: 1px solid var(--border);
+  transition: all var(--speed) ease;
+}
+
+.cartBtn:hover {
+  background: var(--copper);
+  color: #fff;
+  border-color: var(--copper);
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--copper);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ─── Mobile ──────────────────────────────────────────── */
+.menuBtn {
+  display: none;
+  color: var(--text);
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px 24px;
+  border-top: 1px solid var(--border-light);
+  background: var(--surface-1);
+  animation: fadeIn 0.2s ease;
+}
+
+.mobileLink {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color var(--speed);
+}
+
+.mobileLink:hover { color: var(--copper-light); }
+
+@media (max-width: 900px) {
+  .nav { display: none; }
+  .menuBtn { display: flex; }
+}
+
+@media (max-width: 500px) {
+  .logoSub { display: none; }
+}

@@ -1,0 +1,52 @@
+/* ─── Footer Styles ────────────────────────────────────── */
+
+.navLink {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.35s ease;
+}
+
+.navLink:hover {
+  color: var(--copper-light);
+}
+
+.socialIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.socialIcon:hover {
+  color: var(--copper-light);
+  border-color: var(--copper);
+  background: var(--surface-3);
+  transform: translateY(-3px);
+}
+
+.socialIconWhatsApp {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #25D366;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.socialIconWhatsApp:hover {
+  color: #25D366;
+  border-color: #25D366;
+  background: rgba(37, 211, 102, 0.1);
+  transform: translateY(-3px);
+}
