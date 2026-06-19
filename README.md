@@ -29,6 +29,23 @@ SHIPROCKET_PICKUP_LOCATION=Coimbatore Warehouse
 
 Create the API user from the Shiprocket dashboard under Settings > API > Add New API User. The pickup location must exactly match a pickup location configured in Shiprocket.
 
+## Render Strapi Deploy
+
+For the backend service on Render, use Supabase's pooler connection string instead of the direct database URL. Render may not be able to reach Supabase's direct IPv6-only database host, which causes `connect ENETUNREACH ... :5432` during `strapi start`.
+
+In Supabase, copy the Transaction Pooler or Session Pooler URI from Project Settings > Database > Connection string. Put that value in Render as:
+
+```bash
+DATABASE_CLIENT=postgres
+DATABASE_URL=postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres
+DATABASE_SSL=true
+DATABASE_SSL_REJECT_UNAUTHORIZED=false
+HOST=0.0.0.0
+PORT=10000
+```
+
+Keep the existing Strapi secret env vars (`APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY`, and `JWT_SECRET`) set in Render too.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
