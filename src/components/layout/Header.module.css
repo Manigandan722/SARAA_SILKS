@@ -1,4 +1,9 @@
 /* ─── Marquee ─────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 .marqueeBar {
   background: linear-gradient(90deg, var(--copper-dark), var(--copper), var(--copper-dark));
   color: #fff;
@@ -29,6 +34,7 @@
   z-index: 999;
   transition: background var(--speed) ease, box-shadow var(--speed) ease, border-color var(--speed) ease;
   border-bottom: 1px solid transparent;
+  background: var(--bg);
 }
 
 .header.scrolled {
@@ -224,17 +230,22 @@
 .mobileMenu {
   display: flex;
   flex-direction: column;
-  padding: 12px 24px 24px;
+  padding: 12px 24px 32px;
   border-top: 1px solid var(--border-light);
-  background: var(--surface-1);
-  animation: fadeIn 0.2s ease;
+  background: rgba(22, 19, 16, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: fadeIn 0.25s ease-out;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .mobileLink {
+  display: block;
   padding: 14px 0;
   border-bottom: 1px solid var(--border-light);
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--text-secondary);
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -243,9 +254,142 @@
 
 .mobileLink:hover { color: var(--copper-light); }
 
+.mobileLinkCollapsible {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color var(--speed);
+}
+
+.mobileLinkCollapsible:hover {
+  color: var(--copper-light);
+}
+
+.mobileSubMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+  border-left: 2px solid var(--copper);
+}
+
+.mobileSubLink {
+  padding: 10px 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: color var(--speed);
+}
+
+.mobileSubLink:hover {
+  color: var(--copper-light);
+}
+
+.mobileSearchBox {
+  position: relative;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.mobileSearchInput {
+  width: 100%;
+  padding: 12px 16px;
+  padding-right: 48px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.mobileSearchInput:focus {
+  outline: none;
+  border-color: var(--copper-light);
+}
+
+.mobileSearchIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.mobileMenuFooter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.mobileFooterBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-xl);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: all var(--speed);
+}
+
+.mobileFooterBtn:hover {
+  background: var(--surface-3);
+  border-color: var(--copper);
+}
+
+.mobileWhatsappBtn {
+  background: rgba(37, 211, 102, 0.1);
+  border-color: rgba(37, 211, 102, 0.2);
+  color: #25D366;
+}
+
+.mobileWhatsappBtn:hover {
+  background: #25D366;
+  border-color: #25D366;
+  color: #fff;
+}
+
 @media (max-width: 900px) {
   .nav { display: none; }
   .menuBtn { display: flex; }
+}
+
+@media (max-width: 768px) {
+  .logoImg {
+    width: 40px;
+    height: 50px;
+  }
+  .logoMain {
+    font-size: 1.3rem;
+  }
+  .inner {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 12px;
+  }
+  .actions {
+    gap: 2px;
+  }
+  .iconBtn:nth-child(1),
+  .iconBtn:nth-child(2) {
+    display: none;
+  }
 }
 
 @media (max-width: 500px) {

@@ -10,6 +10,7 @@ export default function Header() {
   const { items } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileShopOpen, setMobileShopOpen] = useState(false);
   const cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function Header() {
         <div className={`container ${styles.inner}`}>
           {/* Logo */}
           <Link href="/" className={styles.logo}>
-            <Image src="/logo.jpeg" alt="Saraa Silks" width={72} height={90} style={{ objectFit: 'contain' }} priority />
+            <Image src="/logo.jpeg" alt="Saraa Silks" width={72} height={90} className={styles.logoImg} priority />
             <span className={styles.logoText}>
               <span className={styles.logoMain}>SARAA</span>
               <span className={styles.logoSub}>SILKS &amp; SAREES</span>
@@ -78,11 +79,40 @@ export default function Header() {
         {/* Mobile Menu */}
         {mobileOpen && (
           <div className={styles.mobileMenu}>
-            {['Home', 'Shop', 'About', 'Wholesale', 'Contact'].map(item => (
-              <Link key={item} href={item === 'Home' ? '/' : `/${item.toLowerCase()}`} className={styles.mobileLink} onClick={() => setMobileOpen(false)}>
-                {item}
-              </Link>
-            ))}
+            <Link href="/" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Home</Link>
+            
+            {/* Collapsible Shop Link */}
+            <div>
+              <button className={styles.mobileLinkCollapsible} onClick={() => setMobileShopOpen(!mobileShopOpen)}>
+                Shop {mobileShopOpen ? '▲' : '▼'}
+              </button>
+              {mobileShopOpen && (
+                <div className={styles.mobileSubMenu}>
+                  <Link href="/shop" className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>All Products</Link>
+                  {['Sarees', 'Chudithar', 'Nighties', "Women's Wear", "Men's Wear", 'Dhoti Collection', 'Kids Wear', 'Newborn Baby Dress'].map(c => (
+                    <Link key={c} href={`/shop/${c.toLowerCase().replace(/['"\s]+/g, '-')}`} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
+                      {c}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link href="/about" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>About</Link>
+            <Link href="/wholesale" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Wholesale</Link>
+            <Link href="/contact" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Contact</Link>
+            
+            {/* Mobile Search inside drawer */}
+            <div className={styles.mobileSearchBox}>
+              <input type="text" placeholder="Search products..." className={styles.mobileSearchInput} />
+              <Search size={18} className={styles.mobileSearchIcon} />
+            </div>
+
+            {/* Quick Contact buttons in mobile menu */}
+            <div className={styles.mobileMenuFooter}>
+              <a href="tel:+919655212921" className={styles.mobileFooterBtn}>Call Support</a>
+              <a href="https://wa.me/919655212921" target="_blank" rel="noopener noreferrer" className={`${styles.mobileFooterBtn} ${styles.mobileWhatsappBtn}`}>WhatsApp Chat</a>
+            </div>
           </div>
         )}
       </header>

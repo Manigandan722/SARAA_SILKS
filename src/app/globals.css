@@ -215,3 +215,10 @@ button {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+

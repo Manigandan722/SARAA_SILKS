@@ -633,14 +633,79 @@
 }
 
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; }
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 40px 0 60px;
+    min-height: auto;
+    text-align: center;
+  }
+  .heroContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .heroSub {
+    margin: 0 auto 32px;
+  }
+  .heroActions {
+    justify-content: center;
+  }
   .heroVisual { display: none; }
   .reviewsGrid { grid-template-columns: 1fr; }
+  .section {
+    padding: 60px 0;
+  }
 }
 
 @media (max-width: 640px) {
-  .categoryGrid { grid-template-columns: repeat(2, 1fr); }
+  .heroTitle {
+    font-size: clamp(2rem, 10vw, 3rem);
+    margin-bottom: 20px;
+  }
+  .categoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .categoryCard {
+    height: 130px;
+    border-radius: var(--radius-md);
+  }
+  .categoryEmoji {
+    font-size: 2rem;
+  }
+  .categoryName {
+    font-size: 0.8rem;
+  }
+  .productGrid {
+    gap: 16px;
+  }
+  .productBody {
+    padding: 12px;
+  }
+  .productName {
+    font-size: 0.88rem;
+    margin-bottom: 8px;
+  }
+  .productPrice {
+    font-size: 1.05rem;
+  }
+  .productAdd {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+  }
   .featuresGrid { grid-template-columns: 1fr; }
   .newsletterForm { flex-direction: column; }
-  .nightieActions { flex-direction: column; }
+  .nightieBanner {
+    padding: 60px 16px;
+    text-align: center;
+    margin: 24px 0;
+  }
+  .nightieContent {
+    margin: 0 auto;
+  }
+  .nightieActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
+

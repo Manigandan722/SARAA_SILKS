@@ -1,5 +1,26 @@
 import Link from 'next/link';
 import { fetchProducts, fetchCategories, getStrapiMedia } from '@/lib/api';
+import styles from '../Shop.module.css';
+import type { Metadata } from 'next';
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ category: string }> }
+): Promise<Metadata> {
+  const resolvedParams = await params;
+  const categories = await fetchCategories();
+  const currentCategory = categories.find((c: any) => c.slug === resolvedParams.category);
+
+  if (!currentCategory) {
+    return {
+      title: 'Category Not Found | Saraa Silks',
+    };
+  }
+
+  return {
+    title: `${currentCategory.name} | Saraa Silks`,
+    description: `Shop our premium ${currentCategory.name} collection at Saraa Silks. Direct manufacturer prices.`,
+  };
+}
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const resolvedParams = await params;
@@ -10,33 +31,42 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   const currentCategory = categories.find((c: any) => c.slug === resolvedParams.category);
 
   return (
-    <div className="container" style={{ padding: '60px 20px', display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
-      <aside style={{ flex: '1 1 250px', maxWidth: '300px' }}>
-        <h3 style={{ marginBottom: '20px', color: 'var(--primary-color)' }}>Categories</h3>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li style={{ marginBottom: '10px' }}><Link href="/shop">All Products</Link></li>
+    <div className={`container ${styles.shopContainer}`}>
+      <aside className={styles.sidebar}>
+        <h3 className={styles.sidebarTitle}>Categories</h3>
+        <ul className={styles.categoryList}>
+          <li>
+            <Link href="/shop" className={styles.categoryLink}>
+              All Products
+            </Link>
+          </li>
           {categories.map((cat: any) => (
-            <li key={cat.documentId} style={{ marginBottom: '10px' }}>
-              <Link href={`/shop/${cat.slug}`} style={{ fontWeight: cat.slug === resolvedParams.category ? 'bold' : 'normal' }}>{cat.name}</Link>
+            <li key={cat.documentId}>
+              <Link 
+                href={`/shop/${cat.slug}`} 
+                className={`${styles.categoryLink} ${cat.slug === resolvedParams.category ? styles.activeCategory : ''}`}
+              >
+                {cat.name}
+              </Link>
             </li>
           ))}
         </ul>
       </aside>
-      <main style={{ flex: '3 1 600px' }}>
-        <h1 style={{ marginBottom: '30px' }}>{currentCategory ? currentCategory.name : 'Category Not Found'}</h1>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '30px' }}>
+      <main className={styles.mainContent}>
+        <h1 className={styles.pageTitle}>{currentCategory ? currentCategory.name : 'Category Not Found'}</h1>
+        <div className={styles.productGrid}>
           {products && products.length > 0 ? products.map((product: any) => (
-            <Link href={`/product/${product.documentId}`} key={product.documentId} style={{ background: 'var(--surface-color)', borderRadius: 'var(--border-radius)', overflow: 'hidden', boxShadow: 'var(--box-shadow)', display: 'block' }}>
-              <div style={{ height: '250px', background: 'var(--surface-color)', position: 'relative', overflow: 'hidden' }}>
+            <Link href={`/product/${product.documentId}`} key={product.documentId} className={styles.productCard}>
+              <div className={styles.productImgWrap}>
                 {product.image?.url ? (
-                  <img src={getStrapiMedia(product.image.url) || ''} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={getStrapiMedia(product.image.url) || ''} alt={product.title} className={styles.productImg} />
                 ) : (
-                  <div style={{ width: '100%', height: '100%', background: 'var(--accent-color)' }}></div>
+                  <div className={styles.productPlaceholder}></div>
                 )}
               </div>
-              <div style={{ padding: '20px' }}>
-                <h4 style={{ marginBottom: '10px' }}>{product.title}</h4>
-                <div style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>₹{product.price}</div>
+              <div className={styles.productInfo}>
+                <h4 className={styles.productName}>{product.title}</h4>
+                <div className={styles.productPrice}>₹{product.price}</div>
               </div>
             </Link>
           )) : (
