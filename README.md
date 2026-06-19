@@ -46,6 +46,8 @@ PORT=10000
 
 Keep the existing Strapi secret env vars (`APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY`, and `JWT_SECRET`) set in Render too.
 
+If Render logs still show `ENETUNREACH ... :5432`, the service is still using the old direct Supabase URL. Delete the old `DATABASE_URL` value from Render and replace it with the pooler URL that contains `.pooler.supabase.com` and port `6543`.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
