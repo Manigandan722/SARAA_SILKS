@@ -48,8 +48,17 @@ export default function ProductDetails() {
   };
 
   const handleWhatsAppBuyNow = () => {
-    const text = `Hi Saraa Silks! 👋%0A%0AI would like to order:%0A🛍️ *Product:* ${encodeURIComponent(product.title)}%0A🔖 *SKU:* ${encodeURIComponent(product.sku)}%0A🔢 *Quantity:* ${qty}%0A💰 *Price:* ₹${(product.price * qty).toLocaleString('en-IN')}%0A%0APlease let me know the availability and delivery details!`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+    const text = 
+`Hi Saraa Silks! 👋
+
+I would like to place an order for:
+🛍️ *Product:* ${product.title}
+🔖 *SKU:* ${product.sku || 'N/A'}
+🔢 *Quantity:* ${qty}
+💰 *Total Price:* ₹${(product.price * qty).toLocaleString('en-IN')}
+
+Please let me know the availability and delivery details! Thank you!`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (

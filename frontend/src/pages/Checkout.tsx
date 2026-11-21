@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, CheckCircle2, ShieldCheck, Truck, ArrowLeft } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { WHATSAPP_NUMBER, STORE_NAME } from '../data/products';
+import { WHATSAPP_NUMBER } from '../data/products';
 import styles from './Checkout.module.css';
 
 interface OrderSummaryData {
@@ -61,34 +61,35 @@ export default function Checkout() {
 
     const itemsListText = items
       .map((item, index) => {
-        return `${index + 1}. *${item.title}*%0A   Qty: ${item.quantity} × ₹${item.price.toLocaleString('en-IN')} = ₹${(item.quantity * item.price).toLocaleString('en-IN')}`;
+        return `${index + 1}. *${item.title}*\n   Qty: ${item.quantity} × ₹${item.price.toLocaleString('en-IN')} = ₹${(item.quantity * item.price).toLocaleString('en-IN')}`;
       })
-      .join('%0A%0A');
+      .join('\n\n');
 
     const message = 
-      `🛍️ *NEW ORDER - ${STORE_NAME.toUpperCase()}*%0A` +
-      `----------------------------------%0A` +
-      `🔖 *Order ID:* #${generatedOrderId}%0A` +
-      `📅 *Date:* ${encodeURIComponent(orderDate)}%0A%0A` +
-      `👤 *Customer Information:*%0A` +
-      `• Name: ${encodeURIComponent(fullName)}%0A` +
-      `• Phone: ${encodeURIComponent(formData.phone)}%0A` +
-      (formData.email ? `• Email: ${encodeURIComponent(formData.email)}%0A` : '') +
-      `• Payment Mode: ${encodeURIComponent(formData.paymentMethod)}%0A%0A` +
-      `📍 *Delivery Address:*%0A` +
-      `${encodeURIComponent(fullAddress)}%0A%0A` +
-      `----------------------------------%0A` +
-      `📦 *Items Ordered:*%0A` +
-      `${itemsListText}%0A` +
-      `----------------------------------%0A` +
-      `💰 *Subtotal:* ₹${total.toLocaleString('en-IN')}%0A` +
-      `🚚 *Shipping:* FREE Delivery Across India%0A` +
-      `🏷️ *TOTAL PAYABLE:* ₹${total.toLocaleString('en-IN')}%0A` +
-      `----------------------------------%0A` +
-      (formData.notes ? `📝 *Note:* ${encodeURIComponent(formData.notes)}%0A%0A` : '%0A') +
-      `Please confirm my order and share dispatch tracking details. Thank you! 🙏`;
+`🛍️ *NEW ORDER - SARAA SILKS & SAREES*
+----------------------------------
+🔖 *Order ID:* #${generatedOrderId}
+📅 *Date:* ${orderDate}
 
-    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+👤 *Customer Details:*
+• Name: ${fullName}
+• Phone: ${formData.phone}
+${formData.email ? `• Email: ${formData.email}\n` : ''}• Payment Method: ${formData.paymentMethod}
+
+📍 *Delivery Address:*
+${fullAddress}
+
+----------------------------------
+📦 *Items Ordered (${items.length} items):*
+${itemsListText}
+----------------------------------
+💰 *Subtotal:* ₹${total.toLocaleString('en-IN')}
+🚚 *Shipping:* FREE Delivery Across India
+🏷️ *TOTAL PAYABLE:* ₹${total.toLocaleString('en-IN')}
+----------------------------------
+${formData.notes ? `📝 *Note:* ${formData.notes}\n\n` : ''}Please confirm my order and share dispatch tracking details. Thank you! 🙏`;
+
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
     const orderData: OrderSummaryData = {
       orderId: generatedOrderId,

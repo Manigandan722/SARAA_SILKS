@@ -26,19 +26,17 @@ export default function WholesalePage() {
     e.preventDefault();
 
     const text = 
-      `🏢 *WHOLESALE / BULK ENQUIRY - SARAA SILKS*%0A` +
-      `----------------------------------%0A` +
-      `🏪 *Business Name:* ${encodeURIComponent(formData.businessName)}%0A` +
-      `👤 *Contact Person:* ${encodeURIComponent(formData.contactPerson)}%0A` +
-      `📱 *Mobile Number:* ${encodeURIComponent(formData.mobile)}%0A` +
-      (formData.email ? `📧 *Email:* ${encodeURIComponent(formData.email)}%0A` : '') +
-      `📦 *Interested Category:* ${encodeURIComponent(formData.product)}%0A` +
-      `🔢 *Estimated Quantity:* ${encodeURIComponent(formData.quantity)}%0A` +
-      (formData.message ? `💬 *Requirements:* ${encodeURIComponent(formData.message)}%0A` : '') +
-      `----------------------------------%0A` +
-      `Please provide wholesale catalog, price list, and minimum order requirements.`;
+`🏢 *WHOLESALE / BULK ENQUIRY - SARAA SILKS*
+----------------------------------
+🏪 *Business Name:* ${formData.businessName}
+👤 *Contact Person:* ${formData.contactPerson}
+📱 *Mobile Number:* ${formData.mobile}
+${formData.email ? `📧 *Email:* ${formData.email}\n` : ''}📦 *Interested Category:* ${formData.product}
+🔢 *Estimated Quantity:* ${formData.quantity}
+${formData.message ? `💬 *Requirements:* ${formData.message}\n` : ''}----------------------------------
+Please provide wholesale catalog, price list, and minimum order requirements.`;
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
     setSubmitted(true);
   };
 

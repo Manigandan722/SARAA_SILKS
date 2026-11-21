@@ -11,12 +11,22 @@ export default function Cart() {
     if (items.length === 0) return;
 
     const itemsText = items.map((item, index) => {
-      return `${index + 1}. *${item.title}*%0A   Qty: ${item.quantity} × ₹${item.price.toLocaleString('en-IN')} = ₹${(item.quantity * item.price).toLocaleString('en-IN')}`;
-    }).join('%0A%0A');
+      return `${index + 1}. *${item.title}*\n   Qty: ${item.quantity} × ₹${item.price.toLocaleString('en-IN')} = ₹${(item.quantity * item.price).toLocaleString('en-IN')}`;
+    }).join('\n\n');
 
-    const msg = `🛍️ *NEW CART ORDER - SARAA SILKS & SAREES*%0A----------------------------------%0A📦 *Order Items:*%0A${itemsText}%0A----------------------------------%0A💰 *Total Amount:* ₹${total.toLocaleString('en-IN')}%0A🚚 *Shipping:* FREE Delivery across India%0A----------------------------------%0APlease confirm my order and let me know the payment and delivery procedure!`;
+    const msg = 
+`🛍️ *NEW CART ORDER - SARAA SILKS & SAREES*
+----------------------------------
+📦 *Order Items (${count} items):*
+${itemsText}
+----------------------------------
+💰 *Total Amount:* ₹${total.toLocaleString('en-IN')}
+🚚 *Shipping:* FREE Delivery Across India
+----------------------------------
+Hi Saraa Silks! I would like to place this order from your website. Please confirm availability and share payment/delivery procedure! 🙏`;
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank');
   };
 
   if (items.length === 0) {
