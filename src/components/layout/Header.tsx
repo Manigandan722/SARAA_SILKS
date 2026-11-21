@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Search, Heart, ShoppingCart, MessageCircle, Menu, X } from 'lucide-react';
 import styles from './Header.module.css';
 import { useCart } from '@/context/CartContext';
+import CategoryIcon from '@/components/CategoryIcon';
 
 export default function Header() {
   const { items } = useCart();
@@ -49,8 +50,20 @@ export default function Header() {
             <div className={styles.navDropdown}>
               <Link href="/shop" className={styles.navLink}>Shop ▾</Link>
               <div className={styles.dropdown}>
-                {['Sarees', 'Chudithar', "Women's Nighties", "Women's Wear", "Men's Wear", 'Dhoti Collection', 'Kids Wear', 'Newborn Baby Dress'].map(c => (
-                  <Link key={c} href={`/shop/${c.toLowerCase().replace(/['"\s]+/g, '-')}`} className={styles.dropdownItem}>{c}</Link>
+                {[
+                  { name: 'Sarees', slug: 'sarees' },
+                  { name: 'Chudithar', slug: 'chudithar' },
+                  { name: "Women's Nighties", slug: 'women-s-nighties' },
+                  { name: "Women's Wear", slug: 'women-s-wear' },
+                  { name: "Men's Wear", slug: 'men-s-wear' },
+                  { name: 'Dhoti Collection', slug: 'dhoti-collection' },
+                  { name: 'Kids Wear', slug: 'kids-wear' },
+                  { name: 'Born Baby Dress', slug: 'born-baby-dress' }
+                ].map(c => (
+                  <Link key={c.slug} href={`/shop/${c.slug}`} className={styles.dropdownItem}>
+                    <CategoryIcon slug={c.slug} size={15} style={{ marginRight: '10px', color: 'var(--copper-light)', flexShrink: 0 }} />
+                    <span>{c.name}</span>
+                  </Link>
                 ))}
               </div>
             </div>

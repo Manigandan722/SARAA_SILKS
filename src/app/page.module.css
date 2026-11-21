@@ -223,15 +223,26 @@
   transition: opacity var(--speed);
 }
 
-.categoryEmoji {
+.categoryIconWrap {
   position: relative;
-  font-size: 2.4rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(212, 160, 86, 0.12);
+  border: 1px solid rgba(212, 160, 86, 0.28);
+  color: var(--copper-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
-  transition: transform var(--speed);
+  transition: all var(--speed);
 }
 
-.categoryCard:hover .categoryEmoji {
-  transform: scale(1.2);
+.categoryCard:hover .categoryIconWrap {
+  transform: scale(1.1);
+  background: var(--copper);
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(184, 115, 51, 0.4);
 }
 
 .categoryName {
@@ -670,8 +681,9 @@
     height: 130px;
     border-radius: var(--radius-md);
   }
-  .categoryEmoji {
-    font-size: 2rem;
+  .categoryIconWrap {
+    width: 44px;
+    height: 44px;
   }
   .categoryName {
     font-size: 0.8rem;

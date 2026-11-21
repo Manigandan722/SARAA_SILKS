@@ -1,59 +1,60 @@
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337';
+/**
+ * PURE FRONTEND - 100% FIXED STATIC CONTENT
+ * NO BACKEND SERVER, NO DATABASE, AND NO EXTERNAL API REQUIRED.
+ * All product and category data is loaded locally and statically from src/data/products.ts.
+ */
+import { PRODUCTS, CATEGORIES, type Product, type Category, type ProductImage, WHATSAPP_NUMBER } from '@/data/products';
 
-export type StrapiImage = {
-  url: string;
-  alternativeText?: string | null;
-  width?: number | null;
-  height?: number | null;
-};
+export type StrapiImage = ProductImage;
+export type { Product, Category, ProductImage };
+export { PRODUCTS, CATEGORIES, WHATSAPP_NUMBER };
 
-export type Category = {
-  documentId: string;
-  name: string;
-  slug: string;
-};
-
-export type Product = {
-  documentId: string;
-  title: string;
-  description?: string | null;
-  price: number | string;
-  sku?: string | null;
-  image?: StrapiImage | null;
-  category?: Category | null;
-};
+function normalizeSlug(slug: string): string {
+  const s = slug.toLowerCase().trim();
+  if (s === 'nighties' || s === 'women-s-nighties') return 'women-s-nighties';
+  if (s === 'newborn-baby-dress' || s === 'born-baby-dress') return 'born-baby-dress';
+  return s;
+}
 
 export async function fetchProducts(filters = ''): Promise<Product[]> {
-  try {
-    // Strapi v5 uses flat response structures
-    const res = await fetch(`${STRAPI_URL}/api/products?populate=*${filters ? '&' + filters : ''}`, {
-      next: { revalidate: 60 } // Revalidate every minute
-    });
-    if (!res.ok) throw new Error('Failed to fetch products');
-    const data = await res.json();
-    return data.data;
-  } catch (err) {
-    console.error(err);
-    return [];
+  // If no filters passed, return all products
+  if (!filters) {
+    return PRODUCTS;
   }
+
+  // Check if filtering by documentId
+  const docIdMatch = filters.match(/filters\[documentId\]\[\$eq\]=([^&]+)/);
+  if (docIdMatch) {
+    const id = docIdMatch[1];
+    const match = PRODUCTS.filter(p => p.documentId.toLowerCase() === id.toLowerCase() || p.sku.toLowerCase() === id.toLowerCase());
+    return match;
+  }
+
+  // Check if filtering by category slug
+  const catMatch = filters.match(/filters\[category\]\[slug\]\[\$eq\]=([^&]+)/);
+  if (catMatch) {
+    const slug = normalizeSlug(catMatch[1]);
+    return PRODUCTS.filter(p => normalizeSlug(p.category.slug) === slug);
+  }
+
+  // Fallback direct string match (e.g. if category slug is passed directly)
+  const normFilter = normalizeSlug(filters);
+  const matched = PRODUCTS.filter(p => normalizeSlug(p.category.slug) === normFilter);
+  if (matched.length > 0) {
+    return matched;
+  }
+
+  return PRODUCTS;
 }
 
 export async function fetchCategories(): Promise<Category[]> {
-  try {
-    const res = await fetch(`${STRAPI_URL}/api/categories?populate=*`, {
-      next: { revalidate: 3600 } 
-    });
-    if (!res.ok) throw new Error('Failed to fetch categories');
-    const data = await res.json();
-    return data.data;
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
+  return CATEGORIES;
 }
 
-export function getStrapiMedia(url?: string | null) {
-  if (url == null) return null;
-  if (url.startsWith('http') || url.startsWith('//')) return url;
-  return `${STRAPI_URL}${url}`;
+export function getStrapiMedia(url?: string | null): string {
+  if (!url) return '/images/saree.png';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//') || url.startsWith('/')) {
+    return url;
+  }
+  return `/${url}`;
 }

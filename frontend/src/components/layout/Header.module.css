@@ -1,0 +1,397 @@
+/* ─── Marquee ─────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marqueeBar {
+  background: linear-gradient(90deg, var(--copper-dark), var(--copper), var(--copper-dark));
+  color: #fff;
+  font-size: 0.78rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  overflow: hidden;
+  height: 34px;
+  display: flex;
+  align-items: center;
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+
+.marqueeItem {
+  white-space: nowrap;
+  padding: 0 24px;
+}
+
+/* ─── Header Shell ────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: background var(--speed) ease, box-shadow var(--speed) ease, border-color var(--speed) ease;
+  border-bottom: 1px solid transparent;
+  background: var(--bg);
+}
+
+.header.scrolled {
+  background: rgba(14, 12, 10, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom-color: var(--border);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.45);
+}
+
+/* ─── Inner Layout ────────────────────────────────────── */
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  gap: 24px;
+}
+
+/* ─── Logo ────────────────────────────────────────────── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logoMain {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: var(--copper-light);
+  letter-spacing: 0.12em;
+}
+
+.logoSub {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+/* ─── Nav ─────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navLink {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  transition: color var(--speed) ease, background var(--speed) ease;
+}
+
+.navLink:hover {
+  color: var(--copper-light);
+  background: rgba(200, 118, 58, 0.08);
+}
+
+/* Dropdown */
+.navDropdown {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  min-width: 220px;
+  box-shadow: var(--shadow-card);
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+}
+
+.navDropdown:hover .dropdown {
+  display: flex;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.dropdownItem {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  transition: all var(--speed) ease;
+}
+
+.dropdownItem:hover {
+  background: rgba(200, 118, 58, 0.12);
+  color: var(--copper-light);
+  padding-left: 20px;
+}
+
+/* ─── Actions ─────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all var(--speed) ease;
+}
+
+.iconBtn:hover {
+  background: var(--surface-2);
+  color: var(--copper-light);
+}
+
+.whatsapp:hover {
+  color: #25D366;
+}
+
+.cartBtn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  background: rgba(200, 118, 58, 0.12);
+  border: 1px solid var(--border);
+  transition: all var(--speed) ease;
+}
+
+.cartBtn:hover {
+  background: var(--copper);
+  color: #fff;
+  border-color: var(--copper);
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--copper);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ─── Mobile ──────────────────────────────────────────── */
+.menuBtn {
+  display: none;
+  color: var(--text);
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px 32px;
+  border-top: 1px solid var(--border-light);
+  background: rgba(22, 19, 16, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: fadeIn 0.25s ease-out;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.mobileLink {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color var(--speed);
+}
+
+.mobileLink:hover { color: var(--copper-light); }
+
+.mobileLinkCollapsible {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color var(--speed);
+}
+
+.mobileLinkCollapsible:hover {
+  color: var(--copper-light);
+}
+
+.mobileSubMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+  border-left: 2px solid var(--copper);
+}
+
+.mobileSubLink {
+  padding: 10px 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: color var(--speed);
+}
+
+.mobileSubLink:hover {
+  color: var(--copper-light);
+}
+
+.mobileSearchBox {
+  position: relative;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.mobileSearchInput {
+  width: 100%;
+  padding: 12px 16px;
+  padding-right: 48px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.mobileSearchInput:focus {
+  outline: none;
+  border-color: var(--copper-light);
+}
+
+.mobileSearchIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.mobileMenuFooter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.mobileFooterBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-xl);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: all var(--speed);
+}
+
+.mobileFooterBtn:hover {
+  background: var(--surface-3);
+  border-color: var(--copper);
+}
+
+.mobileWhatsappBtn {
+  background: rgba(37, 211, 102, 0.1);
+  border-color: rgba(37, 211, 102, 0.2);
+  color: #25D366;
+}
+
+.mobileWhatsappBtn:hover {
+  background: #25D366;
+  border-color: #25D366;
+  color: #fff;
+}
+
+@media (max-width: 1200px) {
+  .nav { display: none; }
+  .menuBtn { display: flex; }
+}
+
+@media (max-width: 768px) {
+  .logoImg {
+    width: 40px;
+    height: 50px;
+  }
+  .logoMain {
+    font-size: 1.3rem;
+  }
+  .inner {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 12px;
+  }
+  .actions {
+    gap: 2px;
+  }
+  .iconBtn:nth-child(1),
+  .iconBtn:nth-child(2) {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .logoSub { display: none; }
+}

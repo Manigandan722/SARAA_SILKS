@@ -31,20 +31,25 @@
   font-size: 0.95rem;
   color: var(--text-secondary);
   transition: all var(--speed) ease;
-  display: block;
-  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
 .categoryLink:hover {
   color: var(--copper-light);
+  background: rgba(184, 115, 51, 0.08);
   transform: translateX(4px);
 }
 
 .activeCategory {
   color: var(--copper-light);
+  background: rgba(184, 115, 51, 0.14);
   font-weight: 700;
-  border-left: 2px solid var(--copper);
-  padding-left: 10px;
+  border-left: 3px solid var(--copper);
+  padding-left: 12px;
 }
 
 .mainContent {
